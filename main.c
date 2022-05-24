@@ -1,6 +1,7 @@
 #include "redBlack.h"
 #include "splay.h"
 #include "treap.h"
+#include "avl.h"
 #include <string.h>
 
 void redBlack() {
@@ -128,6 +129,49 @@ void treap() {
 	trp = freeTreap(trp);
 }
 
+void avl() {
+	void *data = (void *) malloc(sizeof(int));
+	*(int *)data = 10;
+	avlNode *node = initNodeAvl(data);
+
+	AvlTree avl = NULL;
+	avl = insertAvl(avl, node);
+
+	*(int *)data = 20;
+	node = initNodeAvl(data);
+	avl = insertAvl(avl, node);
+
+	*(int *)data = 30;
+	node = initNodeAvl(data);
+	avl = insertAvl(avl, node);
+
+	*(int *)data = 40;
+	node = initNodeAvl(data);
+	avl = insertAvl(avl, node);
+
+	*(int *)data = 50;
+	node = initNodeAvl(data);
+	avl = insertAvl(avl, node);
+
+	*(int *)data = 25;
+	node = initNodeAvl(data);
+	avl = insertAvl(avl, node);
+
+	printPreorderTraversalAvl(avl);
+	printf("\n");
+	*(int *)data = 5;
+	avlNode *searched = NULL;
+	searched = searchAvl(avl, data);
+
+	if (searched != NULL) {
+		printf("found %d\n", *(int *)(searched->data));
+	} else {
+		printf("not found\n");
+	}
+
+	free(data);
+}
+
 int main(int argc, char const *argv[]) {
 	char buffer[16];
 	do {
@@ -143,6 +187,10 @@ int main(int argc, char const *argv[]) {
 
 		if (!strcmp(buffer, "treap")) {
 			treap();
+		}
+
+		if (!strcmp(buffer, "avl")) {
+			avl();
 		}
 
 	} while (strcmp(buffer, "exit"));
