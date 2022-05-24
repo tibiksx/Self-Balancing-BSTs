@@ -146,7 +146,7 @@ void printPreorderTraversalSplay(SplayTree st) {
 	printPreorderTraversalSplay(st->right);
 }
 
-void printInorderTraversalSplay(Splay st, int buildUp, int direction) {
+void printInorderTraversalSplay(SplayTree st, int buildUp, int direction) {
 	if (st == NULL) {
 		return;
 	}

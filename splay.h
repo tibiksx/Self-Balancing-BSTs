@@ -15,5 +15,5 @@ SplayTree insertSplay(SplayTree st, splayNode *node);
 SplayTree searchSplay(SplayTree st, void *data);
 SplayTree deleteSplay(SplayTree st, void *data);
 void printPreorderTraversalSplay(SplayTree st);
-void printInorderTraversalSplay(Splay st, int buildUp, int direction);
+void printInorderTraversalSplay(SplayTree st, int buildUp, int direction);
 SplayTree freeSplay(SplayTree st);

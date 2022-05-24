@@ -1,5 +1,6 @@
 #include "redBlack.h"
 #include "splay.h"
+#include "treap.h"
 #include <string.h>
 
 void redBlack() {
@@ -78,6 +79,44 @@ void splay() {
 	st = freeSplay(st);
 }
 
+void treap() {
+	void *data = (void *) malloc(sizeof(int));
+	*(int *)data = 50;
+	treapNode *node = initNodeTreap(data);
+	Treap trp = NULL;
+	trp = insertTreap(trp, node);
+	*(int *)data = 30;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+	*(int *)data = 20;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+	*(int *)data = 40;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+	*(int *)data = 70;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+	*(int *)data = 60;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+	*(int *)data = 80;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+
+	printInorderTraversalTreap(trp);
+
+	*(int *)data = 55;
+	treapNode *res = searchTreap(trp, data);
+
+	if (res != NULL)
+		printf("found: %d\n", *(int *)(res->data));
+	else
+		printf("not found\n");
+
+	trp = freeTreap(trp);
+}
+
 int main(int argc, char const *argv[]) {
 	char buffer[16];
 	do {
@@ -89,6 +128,10 @@ int main(int argc, char const *argv[]) {
 
 		if (!strcmp(buffer, "splay")) {
 			splay();
+		}
+
+		if (!strcmp(buffer, "treap")) {
+			treap();
 		}
 
 	} while (strcmp(buffer, "exit"));
