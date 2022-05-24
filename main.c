@@ -85,28 +85,34 @@ void treap() {
 	treapNode *node = initNodeTreap(data);
 	Treap trp = NULL;
 	trp = insertTreap(trp, node);
-	*(int *)data = 30;
+	*(int *)data = 45;
 	node = initNodeTreap(data);
 	trp = insertTreap(trp, node);
-	*(int *)data = 20;
+	*(int *)data = 90;
 	node = initNodeTreap(data);
 	trp = insertTreap(trp, node);
-	*(int *)data = 40;
+	*(int *)data = 66;
 	node = initNodeTreap(data);
 	trp = insertTreap(trp, node);
-	*(int *)data = 70;
+	*(int *)data = 105;
 	node = initNodeTreap(data);
 	trp = insertTreap(trp, node);
 	*(int *)data = 60;
 	node = initNodeTreap(data);
 	trp = insertTreap(trp, node);
-	*(int *)data = 80;
+	*(int *)data = 30;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+	*(int *)data = 55;
+	node = initNodeTreap(data);
+	trp = insertTreap(trp, node);
+	*(int *)data = 34;
 	node = initNodeTreap(data);
 	trp = insertTreap(trp, node);
 
 	printInorderTraversalTreap(trp);
 
-	*(int *)data = 55;
+	*(int *)data = 105;
 	treapNode *res = searchTreap(trp, data);
 
 	if (res != NULL)
@@ -114,6 +120,11 @@ void treap() {
 	else
 		printf("not found\n");
 
+	*(int *)data = 20;
+	trp = deleteTreap(trp, data);
+	printInorderTraversalTreap(trp);
+
+	free(data);
 	trp = freeTreap(trp);
 }
 

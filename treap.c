@@ -68,6 +68,43 @@ Treap insertTreap(Treap trp, treapNode *node) {
 	return trp;
 }
 
+Treap deleteTreap(Treap trp, void *data) {
+	if (trp == NULL) {
+		return trp;
+	}
+
+	// in left subtree
+	if (compareIntsTreap(data, trp->data) < 0) {
+		trp->left = deleteTreap(trp->left, data);
+
+	// in right subtree
+	} else if (compareIntsTreap(data, trp->data) > 0) {
+		trp->right = deleteTreap(trp->right, data);
+
+	// in root and left subtree null
+	} else if (trp->left == NULL) {
+		treapNode *tmp = trp->right;
+		free(trp);
+		trp = tmp;
+
+	// in root and right subtree null
+	} else if (trp->right == NULL) {
+		treapNode *tmp = trp->left;
+		free(trp);
+		trp->left = tmp;
+
+	// in root and both subtrees != null rotate based on priority
+	} else if (trp->left->priority < trp->right->priority) {
+		trp = rotateLeftTreap(trp);
+		trp->left = deleteTreap(trp->left, data);
+	} else {
+		trp = rotateRightTreap(trp);
+		trp->right = deleteTreap(trp->right, data);
+	}
+
+	return trp;
+}
+
 void printInorderTraversalTreap(Treap trp) {
 	if (trp == NULL) {
 		return;
@@ -99,4 +136,3 @@ Treap freeTreap(Treap trp) {
 	free(save);
 	return NULL;
 }
-
