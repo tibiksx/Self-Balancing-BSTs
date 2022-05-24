@@ -59,6 +59,21 @@ void splay() {
 	toInsert = initNodeSplay(item);
 	st = insertSplay(st, toInsert);
 	printPreorderTraversalSplay(st);
+	printf("\n");
+
+	*(int *)item = 30;
+	st = searchSplay(st, item);
+
+	if (compareInts(st->data, item) != 0) {
+		printf("Not found%d\n", *(int *)(st->data));
+	} else {
+		printf("%d\n", *(int *)(st->data));
+	}
+	printPreorderTraversalSplay(st);
+	printf("\n");
+
+	st = deleteSplay(st, item);
+	printPreorderTraversalSplay(st);
 
 	st = freeSplay(st);
 }

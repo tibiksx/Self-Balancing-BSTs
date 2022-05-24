@@ -42,10 +42,12 @@ SplayTree balanceWithSplay(SplayTree st, void *data) {
 			st->left->left = balanceWithSplay(st->left->left, data);
 
 			st = rotateRight(st);
-		} else {
+		} else if (compareInts(st->left->data, data) < 0) {
 			st->left->right = balanceWithSplay(st->left->right, data);
 
-			st = rotateLeft(st->left);
+			if (st->left->right != NULL) {
+				st->left = rotateLeft(st->left);
+			}
 		}
 
 		if (st->left == NULL) {
@@ -64,7 +66,7 @@ SplayTree balanceWithSplay(SplayTree st, void *data) {
 			if (st->right->left != NULL) {
 				st->right = rotateRight(st->right);
 			}
-		} else {
+		} else if (compareInts(st->right->data, data) < 0) {
 			st->right->right = balanceWithSplay(st->right->right, data);
 
 			st = rotateLeft(st);
@@ -102,6 +104,38 @@ SplayTree insertSplay(SplayTree st, splayNode *node) {
 	return node;
 }
 
+SplayTree searchSplay(SplayTree st, void *data) {
+	return balanceWithSplay(st, data);
+}
+
+SplayTree deleteSplay(SplayTree st, void *data) {
+	if (st == NULL) {
+		return st;
+	}
+
+	st = balanceWithSplay(st, data);
+
+	if (compareInts(st->data, data) != 0) {
+		return st;
+	}
+
+	SplayTree newRoot = NULL;
+	if (st->left == NULL) {
+		newRoot = st;
+		st = st->right;
+	} else {
+		newRoot = st;
+
+		st = balanceWithSplay(st->left, data);
+
+		st->right = newRoot->right;
+	}
+
+	free(newRoot);
+
+	return st;
+}
+
 void printPreorderTraversalSplay(SplayTree st) {
 	if (st == NULL) {
 		return;
@@ -110,6 +144,31 @@ void printPreorderTraversalSplay(SplayTree st) {
 	printf("%d ", *(int *)(st->data));
 	printPreorderTraversalSplay(st->left);
 	printPreorderTraversalSplay(st->right);
+}
+
+void printInorderTraversalSplay(Splay st, int buildUp, int direction) {
+	if (st == NULL) {
+		return;
+	}
+
+	buildUp += 15;
+
+	printInorderTraversalSplay(st->right, buildUp, 1);
+	printf("\n");
+
+	for (int i = 15; i < buildUp; ++i) {
+		printf(" ");
+	}
+
+	buildUp -= 15;
+	if (direction && buildUp)
+		printf("/ ");
+	else if (!direction && buildUp)
+		printf("\\ ");
+
+	buildUp += 15;
+	printf("%d\n", *(int *)(st->data));
+	printInorderTraversalSplay(st->left, buildUp, 0);
 }
 
 SplayTree freeSplay(SplayTree st) {
