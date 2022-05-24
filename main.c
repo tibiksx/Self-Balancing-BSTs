@@ -1,4 +1,5 @@
 #include "redBlack.h"
+#include "splay.h"
 #include <string.h>
 
 void redBlack() {
@@ -33,6 +34,35 @@ void redBlack() {
 	rbt = freeTree(rbt);
 }
 
+void splay() {
+	void *item = (void *) malloc(sizeof(int));
+	*(int *)item = 30;
+	SplayTree st = initNodeSplay(item);
+	*(int *)item = 80;
+	st->left = initNodeSplay(item);
+	*(int *)item = 180;
+	st->right = initNodeSplay(item);
+	*(int *)item = 33;
+	st->left->left = initNodeSplay(item);
+	*(int *)item = 20;
+	st->left->left->left = initNodeSplay(item);
+	*(int *)item = 19;
+	st->left->left->left->left = initNodeSplay(item);
+
+	*(int *)item = 85;
+	splayNode *toInsert = initNodeSplay(item);
+	st = insertSplay(st, toInsert);
+	printPreorderTraversalSplay(st);
+	printf("\n");
+	toInsert = NULL;
+	*(int *)item = 300;
+	toInsert = initNodeSplay(item);
+	st = insertSplay(st, toInsert);
+	printPreorderTraversalSplay(st);
+
+	st = freeSplay(st);
+}
+
 int main(int argc, char const *argv[]) {
 	char buffer[16];
 	do {
@@ -41,6 +71,11 @@ int main(int argc, char const *argv[]) {
 		if (!strcmp(buffer, "rbt")) {
 			redBlack();
 		}
+
+		if (!strcmp(buffer, "splay")) {
+			splay();
+		}
+
 	} while (strcmp(buffer, "exit"));
 
 	return 0;

@@ -148,6 +148,29 @@ RedBlackTree balance(RedBlackTree rbt, redBlackNode *node) {
 	return rbt;
 }
 
+redBlackNode* getSuccessor(redBlackNode *node) {
+	redBlackNode *iter = node;
+
+	while (iter->left != NULL) {
+		iter = iter->left;
+	}
+
+	return iter;
+}
+
+redBlackNode* replace(redBlackNode *node) {
+	if (node->left == NULL && node->right == NULL)
+		return NULL;
+
+	if (node->left != NULL && node->right != NULL)
+		return getSuccessor(node->right);
+
+	if (node->left != NULL)
+		return node->left;
+
+	return node->right;
+}
+
 void printInorderTraversal(RedBlackTree rbt, int buildUp, int direction) {
 	if (rbt == NULL) {
 		return;
@@ -169,7 +192,7 @@ void printInorderTraversal(RedBlackTree rbt, int buildUp, int direction) {
 		printf("\\ ");
 
 	buildUp += 15;
-	printf("%d\n", *(int *)(rbt->data));
+	printf("%d: %d\n", *(int *)(rbt->data), rbt->color);
 	printInorderTraversal(rbt->left, buildUp, 0);
 }
 
