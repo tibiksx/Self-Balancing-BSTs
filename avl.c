@@ -104,6 +104,35 @@ avlNode* searchAvl(AvlTree avl, void *data) {
 	return searchAvl(avl->left, data);
 }
 
+// AvlTree deleteAvl(AvlTree avl, void *data) {
+// 	if (avl == NULL) {
+// 		return avl;
+// 	}
+
+// 	if (compareIntsAvl(data, avl->data) < 0) {
+// 		avl->left = deleteAvl(avl->left, data);
+// 	} else if (compareIntsAvl(data, avl->data) > 0) {
+// 		avl->right = deleteAvl(avl->right, data);
+// 	} else {
+// 		if (avl->left == NULL || avl->right == NULL) {
+// 			avlNode *tmp = NULL;
+
+// 			if (avl->left != NULL) {
+// 				tmp = avl->left;
+// 			} else {
+// 				tmp = avl->right;
+// 			}
+
+// 			if (tmp == NULL) {
+// 				tmp = avl;
+// 				avl = NULL;
+// 			} else {
+				
+// 			}
+// 		}
+// 	}
+// }
+
 void printPreorderTraversalAvl(AvlTree avl) {
 	if (avl == NULL) {
 		return;

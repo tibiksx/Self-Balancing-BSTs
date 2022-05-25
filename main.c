@@ -9,29 +9,37 @@ void redBlack() {
 
 	printf("INSERTION\n");
 	for (int i = 0; i < 15; ++i) {
-		int elem = rand() % 50;
+		int elem = i;
 		redBlackNode *node = initNode(elem);
 		printf("To be inserted: %d\n", elem);
 
 		rbt = insert(rbt, node);
-
-		printf("BEFORE BALANCING\n");
-		printInorderTraversal(rbt, 0, 0);
-		printf("\n");
-		rbt = balance(rbt, node);
 
 		printf("AFTER BALANCING\n");
 		printInorderTraversal(rbt, 0, 0);
 		printf("\n");
 	}
 
-	printf("SEARCH\n");
-	for (int i = 0; i < 30; ++i) {
-		redBlackNode *search = searchTree(rbt, rand() % 50);
-		if (search != NULL) {
-			printf("found: %d\n", *(int *)(search->data));
-		}
-	}
+	// printf("SEARCH\n");
+	// redBlackNode *search = NULL;
+	// void *data = (void *) malloc(sizeof(int));
+	// *(int *)data = 0;
+
+	// for (int i = 0; i < 10; ++i) {
+	// 	*(int *)data = rand() % 30;
+	// 	search = searchTree(rbt, data);
+	// 	if (compareIntsRB(search->data, data) == 0) {
+	// 		printf("found: %d\n", *(int *)(search->data));
+
+	// 		break;
+	// 	}
+	// }
+
+	// if (compareIntsRB(search->data, data) == 0) {
+	// 	rbt = deleteNode(rbt, search);
+	// }
+
+	// printInorderTraversal(rbt, 0, 0);
 
 	rbt = freeTree(rbt);
 }
