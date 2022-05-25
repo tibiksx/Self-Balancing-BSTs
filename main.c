@@ -20,26 +20,29 @@ void redBlack() {
 		printf("\n");
 	}
 
-	// printf("SEARCH\n");
-	// redBlackNode *search = NULL;
-	// void *data = (void *) malloc(sizeof(int));
-	// *(int *)data = 0;
+	printf("SEARCH\n");
+	redBlackNode *search = NULL;
+	void *data = (void *) malloc(sizeof(int));
+	*(int *)data = 0;
 
-	// for (int i = 0; i < 10; ++i) {
-	// 	*(int *)data = rand() % 30;
-	// 	search = searchTree(rbt, data);
-	// 	if (compareIntsRB(search->data, data) == 0) {
-	// 		printf("found: %d\n", *(int *)(search->data));
+	for (int i = 0; i < 10; ++i) {
+		*(int *)data = rand() % 30;
+		search = searchTree(rbt, data);
+		if (compareIntsRB(search->data, data) == 0) {
+			printf("found: %d\n", *(int *)(search->data));
 
-	// 		break;
-	// 	}
-	// }
+			break;
+		} else {
+			printf("not found: %d\n", *(int *)data);
+		}
+	}
 
-	// if (compareIntsRB(search->data, data) == 0) {
-	// 	rbt = deleteNode(rbt, search);
-	// }
+	printf("DELETION\n");
+	if (compareIntsRB(search->data, data) == 0) {
+		rbt = deleteNode(rbt, search);
+	}
 
-	// printInorderTraversal(rbt, 0, 0);
+	printInorderTraversal(rbt, 0, 0);
 
 	rbt = freeTree(rbt);
 }

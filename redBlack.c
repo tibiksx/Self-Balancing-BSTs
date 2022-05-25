@@ -74,7 +74,6 @@ redBlackNode* rightRotate(RedBlackTree *rbt, redBlackNode *node) {
 
 	return node;
 }
-void printInorderTraversal(RedBlackTree rbt, int buildUp, int direction);
 
 RedBlackTree balance(RedBlackTree rbt, redBlackNode *node) {
 	if (node == rbt) {
@@ -130,17 +129,11 @@ RedBlackTree balance(RedBlackTree rbt, redBlackNode *node) {
 					parent->color = grandParent->color;
 					grandParent->color = tmp;
 				}
-				// printf("before rotate\n");
-				// printInorderTraversal(rbt, 0, 0);
 				grandParent = leftRotate(&rbt, grandParent);
-				// printf("after rotate\n");
-				// printInorderTraversal(rbt, 0, 0);
 			}
 		}
 	}
 
-	// printf("before exit\n");
-	// printInorderTraversal(rbt, 0, 0);
 	return rbt;
 }
 
@@ -192,9 +185,6 @@ RedBlackTree insert(RedBlackTree rbt, redBlackNode *node) {
 
 	rbt = balance(rbt, node);
 
-	// printf("after exit\n");
-	// printInorderTraversal(rbt, 0, 0);
-
 	return rbt;
 }
 
@@ -232,14 +222,14 @@ redBlackNode* getSibling(redBlackNode *node) {
 
 	return node->parent->left;
 }
-
+void printInorderTraversal(RedBlackTree rbt, int buildUp, int direction);
 RedBlackTree balanceBlacks(RedBlackTree rbt, redBlackNode *replacement) {
 	if (replacement == rbt) {
 		return rbt;
 	}
 
 	redBlackNode *sibling = getSibling(replacement);
-
+	
 	if (sibling == NULL) {
 		return balanceBlacks(rbt, replacement->parent);
 	} else {
@@ -248,11 +238,11 @@ RedBlackTree balanceBlacks(RedBlackTree rbt, redBlackNode *replacement) {
 			sibling->color = 0;
 
 			if (sibling->parent->left == sibling) {
-				sibling->parent = rightRotate(rbt, sibling->parent);
+				sibling->parent = rightRotate(&rbt, sibling->parent);
 			} else {
-				sibling->parent = leftRotate(rbt, sibling->parent);
+				sibling->parent = leftRotate(&rbt, sibling->parent);
 			}
-
+			printInorderTraversal(rbt, 0, 0);
 			return balanceBlacks(rbt, replacement->parent);
 		} else {
 			if ((sibling->left != NULL && sibling->left->color == 1) || (sibling->right != NULL && sibling->right->color == 1)) {
@@ -260,21 +250,21 @@ RedBlackTree balanceBlacks(RedBlackTree rbt, redBlackNode *replacement) {
 					if (sibling->parent->left == sibling) {
 						sibling->left->color = sibling->color;
 						sibling->color = replacement->parent->color;
-						replacement->parent = rightRotate(rbt, replacement->parent);
+						sibling->parent = rightRotate(&rbt, sibling->parent);
 					} else {
 						sibling->left->color = replacement->parent->color;
-						sibling = leftRotate(rbt, sibling);
-						replacement->parent = rightRotate(rbt, replacement->parent);
+						sibling = rightRotate(&rbt, sibling);
+						sibling->parent = leftRotate(&rbt, sibling->parent);
 					}
 				} else {
 					if (sibling == sibling->parent->left) {
 						sibling->right->color = replacement->parent->color;
-						sibling = leftRotate(rbt, sibling);
-						replacement->parent = rightRotate(rbt, replacement->parent);
+						sibling = leftRotate(&rbt, sibling);
+						sibling->parent = rightRotate(&rbt, sibling->parent);
 					} else {
 						sibling->right->color = sibling->color;
 						sibling->color = replacement->parent->color;
-						replacement->parent = leftRotate(rbt, replacement->parent);
+						sibling->parent = leftRotate(&rbt, sibling->parent);
 					}
 				}
 
@@ -319,6 +309,7 @@ RedBlackTree deleteNode(RedBlackTree rbt, redBlackNode *node) {
 
 		free(node->data);
 		free(node);
+
 		return rbt;
 	}
 
@@ -356,9 +347,7 @@ RedBlackTree deleteNode(RedBlackTree rbt, redBlackNode *node) {
 	memcpy(&(replacement->data), tmp, sizeof(int));
 	free(tmp);
 
-	rbt = deleteNode(rbt, replacement);
-
-	return rbt;
+	return deleteNode(rbt, replacement);
 }
 
 void printInorderTraversal(RedBlackTree rbt, int buildUp, int direction) {
