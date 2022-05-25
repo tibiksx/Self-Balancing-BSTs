@@ -17,3 +17,4 @@ ScapeGoatTree rebuildTree(scapeGoatNode *node, ScapeGoatTree sgt);
 scapeGoatNode* buildTreeFromArray(ScapeGoatTree *arr, int idx, int n);
 int insertAndFindDepth(ScapeGoatTree *sgt, scapeGoatNode *node, int *n);
 void preorderSG(ScapeGoatTree sgt);
+ScapeGoatTree freeSG(ScapeGoatTree sgt);

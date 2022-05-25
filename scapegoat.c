@@ -150,3 +150,16 @@ void preorderSG(ScapeGoatTree sgt) {
 	preorderSG(sgt->left);
 	preorderSG(sgt->right);
 }
+
+ScapeGoatTree freeSG(ScapeGoatTree sgt) {
+	if (sgt == NULL) {
+		return sgt;
+	}
+
+	scapeGoatNode *save = sgt;
+	freeSG(sgt->left);
+	freeSG(sgt->right);
+	free(save->data);
+	free(save);
+	return NULL;
+}

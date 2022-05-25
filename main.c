@@ -224,6 +224,8 @@ void sgt() {
 	insertSG(sgt, data, &n);
 
 	preorderSG(sgt);
+
+	sgt = freeSG(sgt);
 }
 
 int main(int argc, char const *argv[]) {
