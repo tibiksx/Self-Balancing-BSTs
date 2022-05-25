@@ -104,34 +104,84 @@ avlNode* searchAvl(AvlTree avl, void *data) {
 	return searchAvl(avl->left, data);
 }
 
-// AvlTree deleteAvl(AvlTree avl, void *data) {
-// 	if (avl == NULL) {
-// 		return avl;
-// 	}
+avlNode* minNode(AvlTree avl) {
+	avlNode *iter = avl;
 
-// 	if (compareIntsAvl(data, avl->data) < 0) {
-// 		avl->left = deleteAvl(avl->left, data);
-// 	} else if (compareIntsAvl(data, avl->data) > 0) {
-// 		avl->right = deleteAvl(avl->right, data);
-// 	} else {
-// 		if (avl->left == NULL || avl->right == NULL) {
-// 			avlNode *tmp = NULL;
+	while (iter->left != NULL) {
+		iter = iter->left;
+	}
 
-// 			if (avl->left != NULL) {
-// 				tmp = avl->left;
-// 			} else {
-// 				tmp = avl->right;
-// 			}
+	return iter;
+}
 
-// 			if (tmp == NULL) {
-// 				tmp = avl;
-// 				avl = NULL;
-// 			} else {
-				
-// 			}
-// 		}
-// 	}
-// }
+AvlTree deleteAvl(AvlTree avl, void *data) {
+	if (avl == NULL) {
+		return avl;
+	}
+
+	if (compareIntsAvl(data, avl->data) < 0) {
+		avl->left = deleteAvl(avl->left, data);
+	} else if (compareIntsAvl(data, avl->data) > 0) {
+		avl->right = deleteAvl(avl->right, data);
+	} else {
+		if (avl->left == NULL || avl->right == NULL) {
+			avlNode *tmp = NULL;
+
+			if (avl->left != NULL) {
+				tmp = avl->left;
+			} else {
+				tmp = avl->right;
+			}
+
+			if (tmp == NULL) {
+				tmp = avl;
+				avl = NULL;
+			} else {
+				*avl = *tmp;
+			}
+
+			free(tmp);
+		} else {
+			avlNode *tmp = minNode(avl->right);
+
+			memcpy(avl->data, tmp->data, sizeof(int));
+
+			avl->right = deleteAvl(avl->right, tmp->data);
+		}
+	}
+
+	if (avl == NULL) {
+		return avl;
+	}
+
+	if (getHeight(avl->left) > getHeight(avl->right)) {
+		avl->height = 1 + getHeight(avl->left);
+	} else {
+		avl->height = 1 + getHeight(avl->right);
+	}
+
+	int diff = getHeight(avl->left) - getHeight(avl->right);
+
+	if (diff > 1 && getHeight(avl->left->left) - getHeight(avl->left->right) >= 0) {
+		return rotateRightAvl(avl);
+	}
+
+	if (diff > 1 && getHeight(avl->left->left) - getHeight(avl->left->right) < 0) {
+		avl->left = rotateLeftAvl(avl->left);
+		return rotateRightAvl(avl);
+	}
+
+	if (diff < -1 && getHeight(avl->right->left) - getHeight(avl->right->right) <= 0) {
+		return rotateLeftAvl(avl);
+	}
+
+	if (diff < -1 && getHeight(avl->right->left) - getHeight(avl->right->right) > 0) {
+		avl->right = rotateRightAvl(avl->right);
+		return rotateLeftAvl(avl);
+	}
+
+	return avl;
+}
 
 void printPreorderTraversalAvl(AvlTree avl) {
 	if (avl == NULL) {

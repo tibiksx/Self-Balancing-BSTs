@@ -170,7 +170,7 @@ void avl() {
 
 	printPreorderTraversalAvl(avl);
 	printf("\n");
-	*(int *)data = 5;
+	*(int *)data = 40;
 	avlNode *searched = NULL;
 	searched = searchAvl(avl, data);
 
@@ -179,6 +179,10 @@ void avl() {
 	} else {
 		printf("not found\n");
 	}
+
+	avl = deleteAvl(avl, data);
+
+	printPreorderTraversalAvl(avl);
 
 	free(data);
 }
