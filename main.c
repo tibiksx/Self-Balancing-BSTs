@@ -2,6 +2,7 @@
 #include "splay.h"
 #include "treap.h"
 #include "avl.h"
+#include "scapegoat.h"
 #include <string.h>
 
 void redBlack() {
@@ -187,6 +188,44 @@ void avl() {
 	free(data);
 }
 
+void sgt() {
+	void *data = (void *) malloc(sizeof(int));
+
+	*(int *)data = 7;
+	ScapeGoatTree sgt = initNodeSG(data);
+
+	int n = 1;
+
+	*(int *)data = 6;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 3;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 1;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 0;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 8;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 9;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 4;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 5;
+	insertSG(sgt, data, &n);
+
+	*(int *)data = 2;
+	insertSG(sgt, data, &n);
+
+	preorderSG(sgt);
+}
+
 int main(int argc, char const *argv[]) {
 	char buffer[16];
 	do {
@@ -206,6 +245,10 @@ int main(int argc, char const *argv[]) {
 
 		if (!strcmp(buffer, "avl")) {
 			avl();
+		}
+
+		if (!strcmp(buffer, "sgt")) {
+			sgt();
 		}
 
 	} while (strcmp(buffer, "exit"));
