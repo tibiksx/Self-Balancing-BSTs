@@ -45,6 +45,7 @@ void redBlack() {
 
 	printInorderTraversal(rbt, 0, 0);
 
+	free(data);
 	rbt = freeTree(rbt);
 }
 
@@ -66,13 +67,13 @@ void splay() {
 	*(int *)item = 85;
 	splayNode *toInsert = initNodeSplay(item);
 	st = insertSplay(st, toInsert);
-	printPreorderTraversalSplay(st);
+	printInorderTraversalSplay(st, 0, 0);
 	printf("\n");
 	toInsert = NULL;
 	*(int *)item = 300;
 	toInsert = initNodeSplay(item);
 	st = insertSplay(st, toInsert);
-	printPreorderTraversalSplay(st);
+	printInorderTraversalSplay(st, 0, 0);
 	printf("\n");
 
 	*(int *)item = 30;
@@ -83,12 +84,13 @@ void splay() {
 	} else {
 		printf("%d\n", *(int *)(st->data));
 	}
-	printPreorderTraversalSplay(st);
+	printInorderTraversalSplay(st, 0, 0);
 	printf("\n");
 
 	st = deleteSplay(st, item);
-	printPreorderTraversalSplay(st);
+	printInorderTraversalSplay(st, 0, 0);
 
+	free(item);
 	st = freeSplay(st);
 }
 
@@ -123,7 +125,7 @@ void treap() {
 	node = initNodeTreap(data);
 	trp = insertTreap(trp, node);
 
-	printInorderTraversalTreap(trp);
+	printInorderTraversalTreap(trp, 0, 0);
 
 	*(int *)data = 105;
 	treapNode *res = searchTreap(trp, data);
@@ -133,9 +135,9 @@ void treap() {
 	else
 		printf("not found\n");
 
-	*(int *)data = 20;
+	*(int *)data = 105;
 	trp = deleteTreap(trp, data);
-	printInorderTraversalTreap(trp);
+	printInorderTraversalTreap(trp, 0, 0);
 
 	free(data);
 	trp = freeTreap(trp);
@@ -169,7 +171,7 @@ void avl() {
 	node = initNodeAvl(data);
 	avl = insertAvl(avl, node);
 
-	printPreorderTraversalAvl(avl);
+	printInorderTraversalAvl(avl, 0, 0);
 	printf("\n");
 	*(int *)data = 40;
 	avlNode *searched = NULL;
@@ -183,9 +185,10 @@ void avl() {
 
 	avl = deleteAvl(avl, data);
 
-	printPreorderTraversalAvl(avl);
+	printInorderTraversalAvl(avl, 0, 0);
 
 	free(data);
+	avl = freeAvl(avl);
 }
 
 void sgt() {
@@ -223,8 +226,9 @@ void sgt() {
 	*(int *)data = 2;
 	insertSG(sgt, data, &n);
 
-	preorderSG(sgt);
+	printInorderTraversalSG(sgt, 0, 0);
 
+	free(data);
 	sgt = freeSG(sgt);
 }
 

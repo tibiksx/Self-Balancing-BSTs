@@ -105,23 +105,29 @@ Treap deleteTreap(Treap trp, void *data) {
 	return trp;
 }
 
-void printInorderTraversalTreap(Treap trp) {
+void printInorderTraversalTreap(Treap trp, int buildUp, int direction) {
 	if (trp == NULL) {
 		return;
 	}
 
-	printInorderTraversalTreap(trp->left);
+	buildUp += 15;
 
-	printf("NODE: %d - Priority: %d ", *(int *)(trp->data), trp->priority);
-	if (trp->left) {
-		printf("| left: %d ", *(int *)(trp->left->data));
-	}
-	if (trp->right) {
-		printf("| right: %d", *(int *)(trp->right->data));
-	}
+	printInorderTraversalTreap(trp->right, buildUp, 1);
 	printf("\n");
 
-	printInorderTraversalTreap(trp->right);
+	for (int i = 15; i < buildUp; ++i) {
+		printf(" ");
+	}
+
+	buildUp -= 15;
+	if (direction && buildUp)
+		printf("/ ");
+	else if (!direction && buildUp)
+		printf("\\ ");
+
+	buildUp += 15;
+	printf("%d\n", *(int *)(trp->data));
+	printInorderTraversalTreap(trp->left, buildUp, 0);
 }
 
 Treap freeTreap(Treap trp) {

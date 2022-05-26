@@ -183,12 +183,40 @@ AvlTree deleteAvl(AvlTree avl, void *data) {
 	return avl;
 }
 
-void printPreorderTraversalAvl(AvlTree avl) {
+void printInorderTraversalAvl(AvlTree avl, int buildUp, int direction) {
 	if (avl == NULL) {
 		return;
 	}
 
-	printf("%d ", *(int *)(avl->data));
-	printPreorderTraversalAvl(avl->left);
-	printPreorderTraversalAvl(avl->right);
+	buildUp += 15;
+
+	printInorderTraversalAvl(avl->right, buildUp, 1);
+	printf("\n");
+
+	for (int i = 15; i < buildUp; ++i) {
+		printf(" ");
+	}
+
+	buildUp -= 15;
+	if (direction && buildUp)
+		printf("/ ");
+	else if (!direction && buildUp)
+		printf("\\ ");
+
+	buildUp += 15;
+	printf("%d\n", *(int *)(avl->data));
+	printInorderTraversalAvl(avl->left, buildUp, 0);
+}
+
+AvlTree freeAvl(AvlTree avl) {
+	if (avl == NULL) {
+		return avl;
+	}
+
+	avlNode *save = avl;
+	freeAvl(avl->left);
+	freeAvl(avl->right);
+	free(save->data);
+	free(save);
+	return NULL;
 }

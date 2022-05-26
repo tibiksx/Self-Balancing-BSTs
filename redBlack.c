@@ -222,7 +222,9 @@ redBlackNode* getSibling(redBlackNode *node) {
 
 	return node->parent->left;
 }
+
 void printInorderTraversal(RedBlackTree rbt, int buildUp, int direction);
+
 RedBlackTree balanceBlacks(RedBlackTree rbt, redBlackNode *replacement) {
 	if (replacement == rbt) {
 		return rbt;

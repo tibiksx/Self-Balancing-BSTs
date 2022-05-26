@@ -15,5 +15,5 @@ avlNode* rotateRightAvl(avlNode *node);
 AvlTree insertAvl(AvlTree avl, avlNode *node);
 avlNode* searchAvl(AvlTree avl, void *data);
 AvlTree deleteAvl(AvlTree avl, void *data);
-void printPreorderTraversalAvl(AvlTree avl);
+void printInorderTraversalAvl(AvlTree avl, int buildUp, int direction);
 AvlTree freeAvl(AvlTree avl);

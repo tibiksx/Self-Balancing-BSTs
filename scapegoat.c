@@ -141,14 +141,29 @@ int insertAndFindDepth(ScapeGoatTree *sgt, scapeGoatNode *node, int *n) {
 	return d;
 }
 
-void preorderSG(ScapeGoatTree sgt) {
+void printInorderTraversalSG(ScapeGoatTree sgt, int buildUp, int direction) {
 	if (sgt == NULL) {
 		return;
 	}
 
-	printf("%d ", *(int *)(sgt->data));
-	preorderSG(sgt->left);
-	preorderSG(sgt->right);
+	buildUp += 15;
+
+	printInorderTraversalSG(sgt->right, buildUp, 1);
+	printf("\n");
+
+	for (int i = 15; i < buildUp; ++i) {
+		printf(" ");
+	}
+
+	buildUp -= 15;
+	if (direction && buildUp)
+		printf("/ ");
+	else if (!direction && buildUp)
+		printf("\\ ");
+
+	buildUp += 15;
+	printf("%d\n", *(int *)(sgt->data));
+	printInorderTraversalSG(sgt->left, buildUp, 0);
 }
 
 ScapeGoatTree freeSG(ScapeGoatTree sgt) {
